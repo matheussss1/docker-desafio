@@ -1,10 +1,10 @@
 FROM node:16-alpine
 
-WORKDIR /app
+WORKDIR ~/app
 
 COPY . .
 
-RUN npm install
+RUN npm i
 
 EXPOSE 3000
 

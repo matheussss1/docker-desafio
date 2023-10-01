@@ -1,15 +1,25 @@
-version: "3"
+version: "3.1"
 
 services:
+  nginx:
+    build:
+      context: ./nginx
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    networks:
+      - mynetwork
   app:
     build:
       context: ./node
-    ports:
-      - 3000:3000
     volumes:
       - ./node:/app
     networks:
       - mynetwork
+    depends_on:
+      - db
   db:
     build:
       context: ./mysql
@@ -19,8 +29,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - ./mysql/volume:/var/lib/mysql
-    ports:
-      - 3306:3306
     networks:
       - mynetwork
 

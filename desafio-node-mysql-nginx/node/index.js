@@ -14,7 +14,7 @@ const mysql = require("mysql");
 const connection = mysql.createConnection(config);
 
 app.get("/", (req, res) => {
-  const name = "teste";
+  const name = "nome";
 
   connection.query(`INSERT INTO people (nome) VALUES ('${name}')`);
 
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
     return res.send(`
         <h1>Full Cycle Rocks!</h1>
-        <ol>${results.map((el) => `<li>${el.nome}</li>`).join("")}</ol>
+        <ol>${results.map((el, i) => `<li>${el.nome} ${i}</li>`).join("")}</ol>
       `);
   });
 });
