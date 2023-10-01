@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./node
+    ports:
+      - 3000:3000
+    volumes:
+      - ./node:/app
+    networks:
+      - mynetwork
+  db:
+    build:
+      context: ./mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql/volume:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
