@@ -14,6 +14,7 @@ services:
   app:
     build:
       context: ./node
+    entrypoint: "wait-for db:3306 -t 30  -- ./entrypoint.sh"
     volumes:
       - ./node:/app
     networks:
