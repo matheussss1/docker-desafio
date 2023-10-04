@@ -1,22 +1,24 @@
-version: "3.1"
-
 services:
   nginx:
     build:
       context: ./nginx
     restart: always
+    platform: linux/amd64
     ports:
       - "8080:80"
     depends_on:
       - app
+      - db
     networks:
       - mynetwork
   app:
+    # Aqui está o mapeamento de volumes do node
+    volumes:
+      - ./node:/usr/src/app
     build:
       context: ./node
     entrypoint: "wait-for db:3306 -t 30  -- ./entrypoint.sh"
-    volumes:
-      - ./node:/app
+    platform: linux/amd64
     networks:
       - mynetwork
     depends_on:
@@ -25,6 +27,7 @@ services:
     build:
       context: ./mysql
     restart: always
+    platform: linux/amd64
     environment:
       - MYSQL_DATABASE=mydb
       - MYSQL_ROOT_PASSWORD=root

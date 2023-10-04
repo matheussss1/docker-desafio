@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR ~/app
+WORKDIR /usr/src/app
 
 RUN apt update && \
     apt install -y wget netcat-traditional && \
@@ -8,8 +8,6 @@ RUN apt update && \
     chmod +x /usr/bin/wait-for
 
 COPY . .
-
-RUN npm i && \
-    chmod +x ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 EXPOSE 3000
